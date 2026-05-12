@@ -5,3 +5,5 @@ pydantic
 requests
 python-dotenv
 openai
+passlib[bcrypt]
+python-jose

@@ -1,11 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from database import engine, Base
+
 from routes.expense import router as expense_router
+
+
+# 🚀 CREATE TABLES
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# ✅ Allow frontend requests
+
+# 🌐 CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,8 +21,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# 📌 ROUTES
 app.include_router(expense_router)
 
+
+# 🏠 HOME
 @app.get("/")
 def home():
-    return {"message": "Split AI Backend Running"}
+
+    return {
+        "message": "Split AI Backend Running"
+    }
