@@ -18,6 +18,10 @@ function App() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // 🌐 LIVE BACKEND URL
+  const API =
+    "https://split-ai-backend-ird1.onrender.com";
+
   // 💰 Format currency
   const formatMoney = (amount) => {
     return Number(amount).toFixed(0);
@@ -32,7 +36,7 @@ function App() {
 
       setLoading(true);
 
-      await fetch("http://127.0.0.1:8000/add-expense", {
+      await fetch(`${API}/add-expense`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +68,7 @@ function App() {
   const fetchBalances = async () => {
 
     const res = await fetch(
-      "http://127.0.0.1:8000/balances"
+      `${API}/balances`
     );
 
     const data = await res.json();
@@ -76,7 +80,7 @@ function App() {
   const fetchSettlement = async () => {
 
     const res = await fetch(
-      "http://127.0.0.1:8000/settle"
+      `${API}/settle`
     );
 
     const data = await res.json();
@@ -88,7 +92,7 @@ function App() {
   const fetchExpenses = async () => {
 
     const res = await fetch(
-      "http://127.0.0.1:8000/expenses"
+      `${API}/expenses`
     );
 
     const data = await res.json();
