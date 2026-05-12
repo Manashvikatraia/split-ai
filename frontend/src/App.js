@@ -12,6 +12,14 @@ import {
 
 function App() {
 
+  // 🔐 SIMPLE LOGIN
+  const [username, setUsername] = useState(
+    localStorage.getItem("username") || ""
+  );
+
+  const [tempName, setTempName] = useState("");
+
+  // 💸 APP STATES
   const [text, setText] = useState("");
   const [balances, setBalances] = useState({});
   const [settlements, setSettlements] = useState([]);
@@ -25,6 +33,27 @@ function App() {
   // 💰 Format currency
   const formatMoney = (amount) => {
     return Number(amount).toFixed(0);
+  };
+
+  // 🔐 LOGIN
+  const loginUser = () => {
+
+    if (!tempName.trim()) return;
+
+    localStorage.setItem(
+      "username",
+      tempName
+    );
+
+    setUsername(tempName);
+  };
+
+  // 🚪 LOGOUT
+  const logoutUser = () => {
+
+    localStorage.removeItem("username");
+
+    setUsername("");
   };
 
   // ➕ Add Expense
@@ -162,6 +191,45 @@ function App() {
     "#06b6d4"
   ];
 
+  // 🔐 LOGIN SCREEN
+  if (!username) {
+
+    return (
+
+      <div className="app">
+
+        <h1 className="title">
+          💸 Split AI
+        </h1>
+
+        <p className="subtitle">
+          Enter your username to continue
+        </p>
+
+        <div className="input-section">
+
+          <input
+            className="input-box"
+            placeholder="Enter username"
+            value={tempName}
+            onChange={(e) =>
+              setTempName(e.target.value)
+            }
+          />
+
+          <button
+            className="add-btn"
+            onClick={loginUser}
+          >
+            Continue
+          </button>
+
+        </div>
+
+      </div>
+    );
+  }
+
   return (
 
     <div className="app">
@@ -172,8 +240,15 @@ function App() {
       </h1>
 
       <p className="subtitle">
-        AI-powered smart expense sharing
+        Welcome, {username} 👋
       </p>
+
+      <button
+        className="logout-btn"
+        onClick={logoutUser}
+      >
+        Logout
+      </button>
 
       {/* INPUT */}
       <div className="input-section">
