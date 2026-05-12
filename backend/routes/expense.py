@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from schemas import ExpenseCreate
@@ -9,7 +10,7 @@ from openai import OpenAI
 # 🔥 OPENROUTER AI
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key=""
+    api_key=os.getenv("OPENAI_API_KEY")
 )
 
 router = APIRouter()
